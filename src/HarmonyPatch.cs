@@ -109,8 +109,11 @@ namespace FreeAim
                 //FreeAimCore.aimOffsetX += ((float)noisegen.Noise(__instance.ElapsedMilliseconds * driftFrequency, 1000f) - 0.5f) * driftMagnitude * dt;
                 //FreeAimCore.aimOffsetY += ((float)noisegen.Noise(-1000f, __instance.ElapsedMilliseconds * driftFrequency) - 0.5f) * driftMagnitude * dt;
 
-                FreeAimCore.aimOffsetX += (((float)noisegen.Noise(__instance.ElapsedMilliseconds * driftFrequency, 1000f) - 0.5f) - FreeAimCore.aimOffsetX / (driftMax * driftMultiplier)) * driftMagnitude * driftMultiplier * dt;
-                FreeAimCore.aimOffsetY += (((float)noisegen.Noise(-1000f, __instance.ElapsedMilliseconds * driftFrequency) - 0.5f) - FreeAimCore.aimOffsetY / (driftMax * driftMultiplier)) * driftMagnitude * driftMultiplier * dt;
+                float horizontalRatio = __instance.Width / 1920f;
+                float verticalRatio = __instance.Height / 1200f;
+
+                FreeAimCore.aimOffsetX += (((float)noisegen.Noise(__instance.ElapsedMilliseconds * driftFrequency, 1000f) - 0.5f) - FreeAimCore.aimOffsetX / (driftMax * driftMultiplier)) * driftMagnitude * driftMultiplier * dt * horizontalRatio;
+                FreeAimCore.aimOffsetY += (((float)noisegen.Noise(-1000f, __instance.ElapsedMilliseconds * driftFrequency) - 0.5f) - FreeAimCore.aimOffsetY / (driftMax * driftMultiplier)) * driftMagnitude * driftMultiplier * dt * verticalRatio;
 
                 if (__instance.Api.World.ElapsedMilliseconds > twitchLastChangeMilliseconds + twitchDuration)
                 {
@@ -139,8 +142,8 @@ namespace FreeAim
                 //FreeAimCore.aimOffsetX += twitchX * stepSize * twitchMagnitude * dt;
                 //FreeAimCore.aimOffsetY += twitchY * stepSize * twitchMagnitude * dt;
 
-                FreeAimCore.aimOffsetX += twitchX * stepSize * (twitchMagnitude * twitchMultiplier * dt) * (twitchDuration / 20);
-                FreeAimCore.aimOffsetY += twitchY * stepSize * (twitchMagnitude * twitchMultiplier * dt) * (twitchDuration / 20);
+                FreeAimCore.aimOffsetX += twitchX * stepSize * (twitchMagnitude * twitchMultiplier * dt) * (twitchDuration / 20) * horizontalRatio;
+                FreeAimCore.aimOffsetY += twitchY * stepSize * (twitchMagnitude * twitchMultiplier * dt) * (twitchDuration / 20) * verticalRatio;
 
                 twitchLastStepMilliseconds = __instance.Api.World.ElapsedMilliseconds;
 

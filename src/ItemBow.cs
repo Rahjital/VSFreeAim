@@ -163,12 +163,6 @@ namespace FreeAim
                 slot.Itemstack.TempAttributes.RemoveAttribute("renderVariant");
             }
 
-            bool isServer = byEntity.World.Side == EnumAppSide.Server;
-            string side = isServer ? "Server" : "Client";
-
-            //Console.WriteLine($"{side}: {api.World.ElapsedMilliseconds}");
-            Console.WriteLine($"{side}: {DateTime.Now.ToString("HH:mm:ss.ffff")}");
-
             slot.Itemstack.Attributes.SetInt("renderVariant", 0);
             (byEntity as EntityPlayer)?.Player?.InventoryManager.BroadcastHotbarSlot();
 
